@@ -3,4 +3,4 @@ jQueryCSSSlider
 
 jQuery animated carousel / slide show using CSS transitions. Easily styled.
 
-[Click here](https://rawgithub.com/dwarcher/jQueryCSSSlider/master/index.html) for documation and example.
+[Click here](http://dwarcher.github.io/jQueryCSSSlider/) for documation and example.
