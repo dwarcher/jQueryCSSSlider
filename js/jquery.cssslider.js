@@ -119,7 +119,8 @@
 
         this.setItem(1);
 
-
+        // If the slider is hidden initially, it may not get the event which ends the transition. Force it to false.
+        this.inTransition = false;
 
     };
 
