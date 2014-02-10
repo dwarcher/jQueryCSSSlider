@@ -47,7 +47,7 @@
             changedCallback: null,
             willChangeCallback: null,
             userChangedCallback: null,
-
+            useTransitions: true
         };
 
     var supportsTransitions = _supportsTransitions();
@@ -81,23 +81,29 @@
     Plugin.prototype.init = function () {
         var pluginThis = this;
 
-        this.jqElem.on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd',
-            function() {
-                if(pluginThis.inTransition)
-                {
-                    pluginThis.inTransition = false;
+        if(pluginThis.options.useTransitions)
+        {
+            this.jqElem.on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd',
+                function() {
+                    if(pluginThis.inTransition)
+                    {
+                        pluginThis.inTransition = false;
 
-                    if(pluginThis.options.changedCallback)
-                        pluginThis.options.changedCallback(pluginThis, pluginThis.currentItem);
+                        if(pluginThis.options.changedCallback)
+                            pluginThis.options.changedCallback(pluginThis, pluginThis.currentItem);
 
-                    setTimeout(function() { 
-                        pluginThis.doCommandQueue();
-                    }, 50);
-                    
+                        setTimeout(function() { 
+                            pluginThis.doCommandQueue();
+                        }, 50);
+                        
 
 
-                }
-            });
+                    }
+                });
+        } else {
+            this.items.css('transition', 'none');
+            this.items.find("*").css('transition', 'none');
+        }
 
         if(this.options.prevButton)
         {
@@ -192,7 +198,7 @@
         currentItem = n;
 
 
-        if(supportsTransitions)           // Modernizr.csstransitions
+        if(supportsTransitions && this.options.useTransitions)           // Modernizr.csstransitions
         {
             this.inTransition = true;
 
