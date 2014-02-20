@@ -260,6 +260,8 @@
         this.numSliderItems = this.items.length;
 
         this.setItem(this.currentItem);
+
+        clearAnimations();
     }
 
     Plugin.prototype._wrapIndex = function(n) {
