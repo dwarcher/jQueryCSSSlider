@@ -45,6 +45,7 @@
         defaults = {
             infiniteScroll: true,
             visibleItems: 3,
+            sideItems: 1,
             changedCallback: null,
             willChangeCallback: null,
             userChangedCallback: null,
@@ -64,6 +65,8 @@
         this.jqElem.data(pluginName, this);
 
         this.options = $.extend({}, defaults, options);
+
+        this.options.sideItems = (this.options.visibleItems - 1)/2;
 
         this._defaults = defaults;
         this._name = pluginName;
@@ -124,6 +127,7 @@
 
     Plugin.prototype.setItem = function(n) {
         var sliderItems = this.items;
+        this.options.sideItems = (this.options.visibleItems - 1)/2;
 
         // remove existing state classes
         sliderItems.removeClass();
@@ -151,33 +155,72 @@
         }
 
         if (this.options.infiniteScroll) {
-            sliderItems.eq(this._wrapIndex(n - 1)).removeClass().addClass("previous_item");
-            sliderItems.eq(this._wrapIndex(n + 1)).removeClass().addClass("next_item");
 
-            if (this.options.visibleItems == 3) {
-                sliderItems.eq(this._wrapIndex(n - 2)).removeClass().addClass("previous_hidden");
-                sliderItems.eq(this._wrapIndex(n + 2)).removeClass().addClass("next_hidden");
-            } else if (this.options.visibleItems == 5) {
-                sliderItems.eq(this._wrapIndex(n - 2)).removeClass().addClass("previous_item_2");
-                sliderItems.eq(this._wrapIndex(n + 2)).removeClass().addClass("next_item_2");
-
-                sliderItems.eq(this._wrapIndex(n - 3)).removeClass().addClass("previous_hidden");
-                sliderItems.eq(this._wrapIndex(n + 3)).removeClass().addClass("next_hidden");
+            for(var i=1; i<=this.options.sideItems; i++)
+            {
+                if(i <= 1)
+                {
+                    sliderItems.eq(this._wrapIndex(n - i)).removeClass().addClass("previous_item");
+                    sliderItems.eq(this._wrapIndex(n + i)).removeClass().addClass("next_item");
+                } else {
+                    sliderItems.eq(this._wrapIndex(n - i)).removeClass().addClass("previous_item_" + i);
+                    sliderItems.eq(this._wrapIndex(n + i)).removeClass().addClass("next_item_" + i);
+                }
             }
+
+            sliderItems.eq(this._wrapIndex(n - (this.options.sideItems+1))).removeClass().addClass("previous_hidden");
+            sliderItems.eq(this._wrapIndex(n + (this.options.sideItems+1))).removeClass().addClass("next_hidden");
+
+            // if (this.options.visibleItems == 3) {
+            //     sliderItems.eq(this._wrapIndex(n - 2)).removeClass().addClass("previous_hidden");
+            //     sliderItems.eq(this._wrapIndex(n + 2)).removeClass().addClass("next_hidden");
+            // } else if (this.options.visibleItems == 5) {
+            //     sliderItems.eq(this._wrapIndex(n - 2)).removeClass().addClass("previous_item_2");
+            //     sliderItems.eq(this._wrapIndex(n + 2)).removeClass().addClass("next_item_2");
+
+            //     sliderItems.eq(this._wrapIndex(n - 3)).removeClass().addClass("previous_hidden");
+            //     sliderItems.eq(this._wrapIndex(n + 3)).removeClass().addClass("next_hidden");
+            // }
 
         } else {
-            if (n - 1 >= 0)
-                sliderItems.eq(n - 1).removeClass().addClass("previous_item");
-            if (n + 1 < this.numSliderItems)
-                sliderItems.eq(n + 1).removeClass().addClass("next_item");
 
-            if (this.options.visibleItems == 5) {
-                if (n - 2 >= 0)
-                    sliderItems.eq(n - 1).removeClass().addClass("previous_item_2");
-                if (n + 2 < this.numSliderItems)
-                    sliderItems.eq(n + 1).removeClass().addClass("next_item_2");
 
+            for(var i=1; i<=this.options.sideItems; i++)
+            {
+                if(i <= 1)
+                {
+                    if(n-i >= 0)
+                        sliderItems.eq(n - i).removeClass().addClass("previous_item");
+
+                    if(n+1 < this.numSliderItems)
+                        sliderItems.eq(n + i).removeClass().addClass("next_item");
+
+                } else {
+                    if(n-i >= 0)
+                        sliderItems.eq(n - i).removeClass().addClass("previous_item_" + i);
+
+                    if(n+1 < this.numSliderItems)
+                        sliderItems.eq(n + i).removeClass().addClass("next_item_" + i);
+                }
             }
+
+            if(n - (this.options.sideItems+1) >= 0)
+                sliderItems.eq(n - (this.options.sideItems+1)).removeClass().addClass("previous_hidden");
+
+            if(n + (this.options.sideItems+1) >= 0)
+                sliderItems.eq(n + (this.options.sideItems+1)).removeClass().addClass("next_hidden");
+
+            // if (n - 1 >= 0)
+            //     sliderItems.eq(n - 1).removeClass().addClass("previous_item");
+            // if (n + 1 < this.numSliderItems)
+            //     sliderItems.eq(n + 1).removeClass().addClass("next_item");
+
+            // if (this.options.visibleItems == 5) {
+            //     if (n - 2 >= 0)
+            //         sliderItems.eq(n - 1).removeClass().addClass("previous_item_2");
+            //     if (n + 2 < this.numSliderItems)
+            //         sliderItems.eq(n + 1).removeClass().addClass("next_item_2");
+            // }
         }
 
         currentItem = n;

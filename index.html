@@ -219,9 +219,83 @@ h1 {
 
                         </ul>
                     </div>
+
+
                 </div>
                 <div><a id="btn_next2" href="#">Next</a></div>
                 <div><a id="btn_prev2" href="#">Previous</a></div>
+
+
+
+                <h2>7 across example</h2>
+                <div class="choose_slider">
+
+                    <div class="choose_slider_items">
+                        <ul id="mySlider3">
+                            <li class="current_item">
+                                <a href="#">
+                                    <img src="images/Placeholder.png" />
+                                </a>
+                            </li>
+                            <li class="current_item">
+                                <a href="#">
+                                    <img src="images/Placeholder.png" />
+                                </a>
+                            </li>
+                            <li class="current_item">
+                                <a href="#">
+                                    <img src="images/Placeholder.png" />
+                                </a>
+                            </li>
+                            <li class="current_item">
+                                <a href="#">
+                                    <img src="images/Placeholder.png" />
+                                </a>
+                            </li>
+                            <li class="current_item">
+                                <a href="#">
+                                    <img src="images/Placeholder.png" />
+                                </a>
+                            </li>
+                            <li class="current_item">
+                                <a href="#">
+                                    <img src="images/Placeholder.png" />
+                                </a>
+                            </li>
+                            <li class="current_item">
+                                <a href="#">
+                                    <img src="images/Placeholder.png" />
+                                </a>
+                            </li>
+                            <li class="current_item">
+                                <a href="#">
+                                    <img src="images/Placeholder.png" />
+                                </a>
+                            </li>
+                            <li class="current_item">
+                                <a href="#">
+                                    <img src="images/Placeholder.png" />
+                                </a>
+                            </li>
+                            <li class="current_item">
+                                <a href="#">
+                                    <img src="images/Placeholder.png" />
+                                </a>
+                            </li>
+                            <li class="current_item">
+                                <a href="#">
+                                    <img src="images/Placeholder.png" />
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+
+                </div>
+                <div><a id="btn_next3" href="#">Next</a></div>
+                <div><a id="btn_prev3" href="#">Previous</a></div>
+
+
 
             <br/>
             <span>Events: <span id="statusText"></span></span>
@@ -306,6 +380,14 @@ h1 {
             $("#mySlider2").AnimatedSlider( { prevButton: "#btn_prev2", 
                                              nextButton: "#btn_next2",
                                              visibleItems: 5,
+                                             infiniteScroll: true,
+                                             willChangeCallback: function(obj, item) { $("#statusText").text("Will change to " + item); },
+                                             changedCallback: function(obj, item) { $("#statusText").text("Changed to " + item); }
+                                          });
+
+            $("#mySlider3").AnimatedSlider( { prevButton: "#btn_prev3", 
+                                             nextButton: "#btn_next3",
+                                             visibleItems: 7,
                                              infiniteScroll: true,
                                              willChangeCallback: function(obj, item) { $("#statusText").text("Will change to " + item); },
                                              changedCallback: function(obj, item) { $("#statusText").text("Changed to " + item); }
